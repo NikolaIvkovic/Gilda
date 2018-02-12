@@ -1,0 +1,334 @@
+﻿* { 
+    -moz-box-sizing: border-box; 
+    -webkit-box-sizing: border-box; 
+     box-sizing: border-box; 
+}
+body {
+	background-image: url('../img/background.png');
+	background-position: center;
+	background-attachment: fixed;
+}
+
+.wrapper {
+	box-shadow: 1px 1px 60px white;
+	width: 1000px;
+	margin: auto auto auto;
+	border-radius: 10px;
+	opacity: 0.9;
+}
+.adminWrapper {
+	width: 1000px;
+	margin: auto auto auto;
+	text-align: center;
+}
+.sankWrapper {
+background-color: rgb(253, 253, 255, 0.3);
+	box-shadow: 1px 1px 60px white;
+	width: 1200px;
+	margin: auto auto auto;
+	border-radius: 10px;
+	overflow: hidden;
+}
+.sankArtikli {
+	width:535px;
+
+}
+#sankBlank {
+	font-size: 120%;
+}
+.dnevnaWrapper{
+border: 1px solid black;
+border-radius: 25px;
+display: inline-block;
+float: right;
+width: 500px;
+height: 750px;
+overflow: auto;
+}
+.dnevnaLista {
+margin: auto auto auto;
+}
+.dnevnaLista td {
+padding: 3px;
+}
+.blankOver{
+	background: #e6e0e0 !important;
+}
+.sankLista{
+	width: 310px;
+	height: 800px;
+	background: #ffffff;
+	margin-left: 10px;
+	opacity: 0.85;
+	padding: 10px;
+	overflow: auto;
+}
+.accordionDragover{
+border: 3px solid #f00;
+}
+.radniDugme{
+	border: 4px solid white;
+	border-radius: 15px;
+	font-size: 32px;
+	color: white;
+	text-align: center;
+	width: 600px;
+	margin: auto auto auto;
+	padding: 5px;
+	cursor: pointer;
+}
+.radniPocni {
+background: green;
+}
+.radniZavrsi{
+background: #e90909;
+}
+.sankBorders{
+	border: 1px solid #a10c3f;
+	border-radius: 10px;
+	float:left;
+	display:inline-block;
+}
+.artikalTile {
+	background-color: rgb(233, 224, 217);
+	height: 125px;
+	width: 125px;
+	border: 1px solid #a10c3f;
+	border-radius: 10px;
+	display: inline-block;
+	background-position: center;
+	background-repeat: no-repeat;
+	text-align: center;
+	color: #fff;
+	text-shadow: 0 0 5px black, 0 0 10px #a10c3f;
+	font-size: 16pt;
+	font-weight: bold;
+	overflow: hidden;
+	margin: 2px;
+	-webkit-touch-callout: none; 
+    -webkit-user-select: none; 
+    -khtml-user-select: none; 
+    -moz-user-select: none; 
+    -ms-user-select: none; 
+    user-select: none;
+}
+.stavkaButton {
+	display: inline-block;
+	height: 20px;
+	width: 20px;
+    color: white;
+    text-align: center;
+	font-weight: bold;
+	font-size: 16px;
+	border-radius: 5px;
+}
+.nabavka {
+background: #e93d3d !important;
+box-shadow: 0 0 4px;
+font-weight: bold !important;
+color: #cb0606 !important;
+text-shadow: 0 0 3px white;
+}
+.minus {
+	background-color: #e90909;
+	cursor: pointer;
+}
+.plus {
+	background-color: green;
+}
+.accordionOver {
+	border: 3px solid #e90909;
+}
+.formwrapper {
+	width: 500px;
+	margin: 0px auto auto;
+}
+.formTable {
+	margin: auto auto auto;
+}
+.submitCell {
+	text-align: center;
+}
+.formButton {
+	background-color: #a10c3f;
+    border:  1px solid #e90909;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+	border-radius: 10px;
+	padding: 4px;
+	cursor: pointer;
+}
+.delButton{
+	background-color: #e90909;
+    border:  1px solid #e90909;
+	text-align: center;
+	display: inline-block;
+	font-size: 18pt;
+	padding: 0px 5px 0px 5px;
+	border-radius: 50px;
+}
+.whitelink {
+	text-decoration: none;
+	color: white !important;
+	font-weight: bold;
+	
+}
+.disabledButton {
+	background: #e4e0e0;
+	border:  1px solid white;
+	border-radius: 10px;
+}
+.naslov {
+	text-align: center;
+	color: #f2caca;
+	text-shadow: 0 0 3px #a10c3f;
+	font-size: 32pt;
+}
+.lista {
+	width: 700px;
+	margin: 0px auto auto;
+}
+.lista td{
+	border: 1px solid black;
+	text-align: center;
+	border-radius: 5px;
+	height: 50px;
+}
+.neplaceno {
+background: #ffdfdf;
+margin: 10px auto 10px;
+}
+.neplaceno  td{
+	border: solid 1px #ff1313;
+}
+.zaPlacanje{
+border-radius: 5px;
+background: #ffdfdf;
+margin: auto auto auto;
+width: 80%;
+padding: 3px;
+text-align: center;
+}
+.clanlista {
+	width: 950px;
+	margin: 0px auto auto;
+}
+.clanlista td{
+	text-align: center;
+	padding: 3px;
+}
+.liste {
+	width: 350px;
+	display: inline-block;
+}
+.liste td{
+	text-align: center;
+	padding: 3px;
+}
+.liste tr:hover {
+	background: #e1ffdf;
+	cursor: pointer;
+}
+.duznik {
+	cursor: pointer;
+}
+.napomene{
+	background: #dfe7ff;
+	border: solid 1px #1358ff;
+	border-radius: 10px;
+	padding: 5px;
+	width: 450px;
+	margin: 10px auto auto;
+	text-align: center;
+}
+.sanklistaWrapper{
+	display: inline-block;
+	overflow: auto;
+	float: left;
+}
+.obracun{
+	background: #e1ffdf;
+	width: 350px;
+
+	border-radius: 15px;
+	text-align: center;
+	font-size: 120%;
+}
+.ukupno {
+	text-align: left !important;
+}
+.odd {
+}
+
+.even {
+	background: #e4e0e0;
+}
+.currentPage{
+	padding: 2px;
+	border-radius: 5px;
+	border: 1px solid #e90909;
+	background: #a10c3f;
+	font-weight: normal;
+	color: #ffffff;
+}
+
+.pagelink {
+	padding: 4px;
+	text-decoration: none;
+	font-weight: bold;
+}
+.pagelinkWrapper {
+	width: 250px;
+	margin: 10px auto auto;
+}
+.nolink {
+	padding: 4px;
+}
+.noborderRow td {
+border: none;
+}
+
+.errNotice {
+	background: #e1ffdf;
+	border: solid 1px #21ff13;
+	border-radius: 10px;
+	padding: 5px;
+	width: 700px;
+	margin: auto auto auto;
+	text-align: center;
+}
+
+.errError {
+	background: #ffdfdf;
+	border: solid 1px #ff1313;
+	border-radius: 10px;
+	padding: 5px;
+	width: 700px;
+	margin: auto auto auto;
+	text-align: center;
+}
+.errValidation {
+	background: #ffdfdf;
+	border: solid 1px #ff1313;
+	border-radius: 10px;
+	padding: 5px;
+	width: 700px;
+	margin: auto auto auto;
+	text-align: center;
+}
+.artThumbnail {
+	max-width: 50px;
+	max-height: 50px;
+}
+.footer {
+	background-color: rgb(253, 253, 255, 0.5);
+	box-shadow: 1px 1px 60px white;
+	width: 250px;
+	margin: auto auto auto;
+	border-radius: 10px;
+	text-align: center;
+	padding: 5px;
+}

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require 'header.php';
 include 'classes/artikli.php';
 $kategorije = Kategorija::getKategorije($db);

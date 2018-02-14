@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 include 'db.php';
 switch ($_REQUEST['action']) {
 	case 'art_new' :

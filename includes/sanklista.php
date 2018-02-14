@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require 'header.php';
 include APP_DIR.'classes/sank_lista.php';
 $tablist = '<ul>';

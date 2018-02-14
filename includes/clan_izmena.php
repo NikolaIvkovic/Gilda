@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require 'header.php';
 include APP_DIR.'classes/clanovi.php';
 if ($mode == 'update') {

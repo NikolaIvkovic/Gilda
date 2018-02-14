@@ -1,4 +1,5 @@
 <?php
+namespace Classes;
 class Sanklista {
 	public static function orderArtikal (array $data, PDO $db) {
 		$sql = 'INSERT INTO sanklista (art_id, rd_id, cl_broj) VALUES (:art_id, :rd_id, :cl_broj)';

@@ -1,4 +1,5 @@
-﻿<?php
+<?php
+namespace Classes;
 class slika{
 	private $file;
 	private $target_filename;

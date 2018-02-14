@@ -1,4 +1,5 @@
-﻿<?php
+<?php
+namespace Classes;
 class Clan {
 	private $db;
 	private $cl_broj;

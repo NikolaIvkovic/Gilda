@@ -1,4 +1,5 @@
 <?php
+	namespace Classes;
 	class Paginator {
 	public $numrows;
 	public $pagesize;

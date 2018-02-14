@@ -1,4 +1,5 @@
-﻿<?php
+<?php
+namespace Classes;
 class Artikal {
 	private $db;
 	private $art_id;

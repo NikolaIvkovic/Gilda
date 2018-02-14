@@ -1,4 +1,5 @@
 <?php
+namespace Classes;
 class validator {
 public $fields;
 public $errors;

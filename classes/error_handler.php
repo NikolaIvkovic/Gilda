@@ -1,4 +1,5 @@
-﻿<?php
+<?php
+namespace Classes;
 class errorHandler {
 	private $system;
 	private $validation;

@@ -1,6 +1,6 @@
 <?php
 namespace Classes;
-class errorHandler {
+class ErrorHandler {
 	private $system;
 	private $validation;
 	private $notices;

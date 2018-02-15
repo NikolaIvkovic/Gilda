@@ -1,7 +1,6 @@
 <?php
 require 'header.php';
-include 'classes/artikli.php';
-$kategorije = Kategorija::getKategorije($db);
+$kategorije = Classes\Kategorija::getKategorije($db);
 $tabs = '<div id="tabs"><ul>';
 foreach($kategorije as $kat) {
 	$tabs.='<li><a href="includes/sank_artikli.php?kat_id='.$kat['kat_id'].'">'.$kat['kat_naziv'].'</a></li>';

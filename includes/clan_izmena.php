@@ -1,6 +1,5 @@
 <?php
 require 'header.php';
-include APP_DIR.'classes/clanovi.php';
 if ($mode == 'update') {
 	$action = 'IZMENI';
 	$clan = new Clan($cl_broj, $db);
@@ -8,7 +7,7 @@ if ($mode == 'update') {
 }
 if ($mode == 'add') {
 	$action = 'DODAJ';
-	$broj = '<input type="text" name="cl_broj" id="cl_broj" size ="4" value="'.Clan::nextBroj($db).'">';
+	$broj = '<input type="text" name="cl_broj" id="cl_broj" size ="4" value="'.Classes\Clan::nextBroj($db).'">';
 }
 $values = array();
 if (isset($_SESSION['formdata']) && count($_SESSION['formdata']) > 0) {
@@ -23,9 +22,9 @@ if (isset($_SESSION['formdata']) && count($_SESSION['formdata']) > 0) {
 	unset($_SESSION['formdata']);
 }
 else {
-	$values['broj'] = (isset($cl_broj)) ? $cl_broj : Clan::nextBroj($db);
+	$values['broj'] = (isset($cl_broj)) ? $cl_broj : Classes\Clan::nextBroj($db);
 	$values['imeprezime'] = (isset($clan)) ? $clan->getImePrezime() : '';
-	$values['rodjen'] = (isset($clan)) ? Clan::dateDb2Form($clan->getRodjen()) : '';
+	$values['rodjen'] = (isset($clan)) ? Classes\Clan::dateDb2Form($clan->getRodjen()) : '';
 	$values['telefon'] = (isset($clan)) ? $clan->getTelefon() : '';
 	$values['email'] = (isset($clan)) ? $clan->getEmail() : '';
 	$values['facebook'] = (isset($clan)) ? $clan->getfacebook() : '';

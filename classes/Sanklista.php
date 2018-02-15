@@ -1,7 +1,7 @@
 <?php
 namespace Classes;
 class Sanklista {
-	public static function orderArtikal (array $data, PDO $db) {
+	public static function orderArtikal (array $data, \PDO $db) {
 		$sql = 'INSERT INTO sanklista (art_id, rd_id, cl_broj) VALUES (:art_id, :rd_id, :cl_broj)';
 		$stmt = $db->prepare($sql);
 		$stmt->execute($data);
@@ -9,13 +9,13 @@ class Sanklista {
 		$db->query($sql);
 		return true;
 	}
-	public static function payArtikal (array $data, PDO $db) {
+	public static function payArtikal (array $data, \PDO $db) {
 		$sql = 'UPDATE sanklista set sl_placeno = 1 WHERE sl_id = :sl_id';
 		$stmt = $db->prepare($sql);
 		$stmt->execute($data);
 		return true;
 	}
-	public static function getAccordionClan (array $data, PDO $db) {
+	public static function getAccordionClan (array $data, \PDO $db) {
 		$sql = 'SELECT sl.sl_id, sl.art_id, sl.sl_placeno, art.art_naziv 
 				FROM sanklista sl  JOIN artikli art
 				ON sl.art_id = art.art_id
@@ -59,7 +59,7 @@ class Sanklista {
 		}
 	return $html;
 	}
-	public static function rebuildAccordion(array $data, PDO $db)  {
+	public static function rebuildAccordion(array $data, \PDO $db)  {
 		$accordion = array();
 		$sql = 'SELECT sl.cl_broj, cl.cl_imeprezime 
 				FROM sanklista sl JOIN clanovi cl 
@@ -76,11 +76,11 @@ class Sanklista {
 		}
 		return $accordion;
 	}
-	public static function getListTable (array $data, PDO $db) {
-		$month = new DateTime($data['month']);
+	public static function getListTable (array $data, \PDO $db) {
+		$month = new \DateTime($data['month']);
 		$data = array();
 		$data['start'] = $month->format('Y-m-d H:i:s');
-		$month->add(new DateInterval('P1M'));
+		$month->add(new \DateInterval('P1M'));
 		$data['end'] = $month->format('Y-m-d H:i:s');
 		$sql = 'SELECT sl.rd_id, sl.rd_start, sum(art.art_prodajna) AS ukupno
 				FROM
@@ -106,7 +106,7 @@ class Sanklista {
 						'Nedelja');
 		while ($row = $stmt->fetch()) {
 			$rowclass = ($odd) ? 'odd' : 'even';
-			$datum = new DateTime($row['rd_start']);
+			$datum = new \DateTime($row['rd_start']);
 
 			$table .= '<tr class="listRow '.$rowclass.'" id="'.$row['rd_id'].'">
 					<td><input class="checkObracun" type="checkbox" ></td>
@@ -121,7 +121,7 @@ class Sanklista {
 		$table .= '</table>';
 		return $table;
 	}
-	public static function getSankLista(array $data, PDO $db) {
+	public static function getSankLista(array $data, \PDO $db) {
 		$sql = 'SELECT art.art_naziv, art.art_prodajna, COUNT(sl.sl_placeno) AS prodato, art.art_stanje
 				FROM sanklista sl JOIN artikli art ON sl.art_id = art.art_id  
 				WHERE sl.rd_id = :rd_id AND sl_placeno = 1
@@ -172,23 +172,23 @@ class Sanklista {
 		}
 		return $sanklista;
 	}
-	public static function newRadniDan(PDO $db) {
+	public static function newRadniDan(\PDO $db) {
 		$sql = 'INSERT INTO radni_dani (rd_stop) values (null)';
 		$db->query($sql);
 		return $db->lastinsertid();
 	}
-	public static function endRadniDan(array $data, PDO $db) {
+	public static function endRadniDan(array $data, \PDO $db) {
 		$sql = 'UPDATE radni_dani SET rd_stop = CURRENT_TIMESTAMP WHERE rd_id = :rd_id';
 		$stmt = $db->prepare($sql);
 		$stmt->execute($data);
 		echo $data['rd_id'];
 	}
-	public static function newNapomena (array $data, PDO $db) {
+	public static function newNapomena (array $data, \PDO $db) {
 		$sql = 'INSERT INTO napomena (rd_id, np_sadrzaj) VALUES (:rd_id, :np_sadrzaj)';
 		$stmt = $db->prepare($sql);
 		$stmt->execute($data);
 	}
-	public static function getDuznici (array $data = NULL, PDO $db) {
+	public static function getDuznici (array $data = NULL, \PDO $db) {
 		$rd_condition = '';
 		if (isset($data)) {
 			$rd_condition = ' AND NOT s.rd_id = '.$data['rd_id'];
@@ -211,7 +211,7 @@ class Sanklista {
 			return $duznici;
 		}
 	}
-	public static function getDuznikArtikli(array $data, PDO $db) {
+	public static function getDuznikArtikli(array $data, \PDO $db) {
 		$sql = 'SELECT a.art_naziv, a.art_prodajna, r.rd_start FROM
 				artikli a JOIN sanklista s ON a.art_id = s.art_id
 				JOIN radni_dani r ON s.rd_id = r.rd_id
@@ -222,7 +222,7 @@ class Sanklista {
 		$odd = true;
 			while ($row = $stmt->fetch()) {
 				$rowclass = ($odd) ? 'odd' : 'even';
-				$datum = new DateTime($row['rd_start']);
+				$datum = new \DateTime($row['rd_start']);
 				$duznik .= '<tr class="'.$rowclass.'"><td>'.$row['art_naziv'].'</td><td>'.$row['art_prodajna'].'DIN</td><td>'.$datum->format('d.m.Y').'</td></tr>';
 				$odd = !$odd;
 			}

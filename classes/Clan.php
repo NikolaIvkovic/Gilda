@@ -10,7 +10,7 @@ class Clan {
 	private $cl_facebook;
 	private $cl_igre;
 	
-	public function __construct ($cl_broj, PDO $db) {
+	public function __construct ($cl_broj, \PDO $db) {
 		$sql = 'SELECT * FROM clanovi WHERE cl_broj = :cl_broj';
 		$stmt = $db->prepare($sql);
 		$stmt->execute(['cl_broj' => $cl_broj]);
@@ -41,7 +41,7 @@ class Clan {
 	public function getIgre () {
 		return $this->cl_igre;
 	}
-	public static function nextBroj (PDO $db) {
+	public static function nextBroj (\PDO $db) {
 		$sql = 'SELECT cl_broj FROM clanovi ORDER BY cl_broj DESC LIMIT 1';
 		$stmt = $db->query($sql);
 		$row = $stmt->fetch();
@@ -67,7 +67,7 @@ class Clan {
 		return date ('d.m.Y', mktime(0, 0, 0, $tempdate[1], $tempdate[2], $tempdate[0]));
 	}
 	
-	public static function updateClan (array $data, PDO $db) {
+	public static function updateClan (array $data, \PDO $db) {
 		
 		$sql = 'UPDATE clanovi SET
 				cl_imeprezime = :cl_imeprezime,
@@ -86,7 +86,7 @@ class Clan {
 		return $stmt->execute($data);
 		
 	}
-	public static function newClan (array $data, PDO $db) {
+	public static function newClan (array $data, \PDO $db) {
 		$sql = 'INSERT INTO clanovi (cl_broj, cl_imeprezime, cl_rodjen, cl_telefon, cl_email, cl_facebook, cl_igre)
 							VALUES (:cl_broj, :cl_imeprezime, :cl_rodjen, :cl_telefon, :cl_email, :cl_facebook, :cl_igre)';
 		

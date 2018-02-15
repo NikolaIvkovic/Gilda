@@ -14,7 +14,7 @@
 	public $nextstr;
 	public $cleanquerystr;
 	
-		public function __construct(PDO $db) {
+		public function __construct(\PDO $db) {
 		//podesiti pocetne vrednosti
 		$this->pagesize = 10;
 		$this->rangelen = 7;
@@ -140,7 +140,7 @@
 				$back = $this->currentpage -1;
 				$connect = (strpos($this->cleanquerystr, '?') == false) ? '?' : '&';
 				$prevpage =($this->cleanquerystr == $_SERVER['PHP_SELF']) ? $this->cleanquerystr.'?'.$this->pageqstr.'='.$back : $this->cleanquerystr.$connect.$this->pageqstr.'='.$back;
-				echo ($this->currentpage == 1) ? '<span class="disabledButton nolink">'.$this->prevstr.'</span>' : '<span class="currentPage"><a class="whitelink" href="'.$prevpage.'">'.$this->prevstr.'</a></span>';
+				echo ($this->currentpage == 1) ? '<span class="disabledButton nolink">'.$this->prevstr.'</span>' : '<span class="currentPage"><a class="pagelink whitelink" href="'.$prevpage.'">'.$this->prevstr.'</a></span>';
 				
 					for ($i = 1; $i <= $this->numpages; $i++) {
 					echo ($this->range['start'] > 1 && $i == $this->range['start']) ? '...' : '';
@@ -152,7 +152,7 @@
 				
 				$fwd = $this->currentpage +1;
 				$nextpage = $prevpage =($this->cleanquerystr == $_SERVER['PHP_SELF']) ? $this->cleanquerystr.$connect.$this->pageqstr.'='.$fwd : $this->cleanquerystr.'&'.$this->pageqstr.'='.$fwd;
-				echo ($this->currentpage == $this->numpages) ? '<span class="disabledButton nolink">'.$this->nextstr.'</span>' : '<span class="currentPage"><a class="whitelink" href="'.$nextpage.'">'.$this->nextstr.'</a></span>';
+				echo ($this->currentpage == $this->numpages) ? '<span class="disabledButton nolink">'.$this->nextstr.'</span>' : '<span class="currentPage"><a class="pagelink whitelink" href="'.$nextpage.'">'.$this->nextstr.'</a></span>';
 			echo '</div>';
 			}
 		

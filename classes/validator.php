@@ -1,6 +1,6 @@
 <?php
 namespace Classes;
-class validator {
+class Validator {
 public $fields;
 public $errors;
 private $valresult;

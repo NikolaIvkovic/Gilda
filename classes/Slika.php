@@ -1,6 +1,6 @@
 <?php
 namespace Classes;
-class slika{
+class Slika{
 	private $file;
 	private $target_filename;
 	private $origWidth;
@@ -47,8 +47,4 @@ class slika{
 	}
 }
 
-
-/*$pic = new slika($_FILES['slika']);
-$pic->setFilename('gica');
-$pic->saveResized();*/
 ?>

@@ -1,8 +1,6 @@
 <?php
 require 'header.php';
-include APP_DIR.'classes/clanovi.php';
-include APP_DIR.'classes/paginator.php';
-$pag = new paginator($db);
+$pag = new Classes\Paginator($db);
 $pag->setpageqstr('page');
 $pag->setpagesize(20);
 $pag->getnumrows('clanovi');
@@ -18,7 +16,7 @@ $stmt->execute();
 $odd = true;
 echo '<table class ="clanlista"><tr><th>Br</th><th>Ime i prezime</th><th style="width: 10px;">Rođen</th><th>Tel</th><th>E-mail</th><th>Facebook</th><th style="width:20%">Omiljene igre</th></tr>';
 	while ($row = $stmt->fetch()) {
-		$datum = clan::dateDb2Form($row['cl_rodjen']);
+		$datum = Classes\Clan::dateDb2Form($row['cl_rodjen']);
 		$rowclass = ($odd) ? 'odd' : 'even';
 		$odd = !$odd;
 		echo '<tr class="'.$rowclass.'">';

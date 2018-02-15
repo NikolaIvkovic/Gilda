@@ -1,7 +1,6 @@
 <?php
 require 'header.php';
-include 'classes/artikli.php';
-$kategorije = Kategorija::getKategorije($db);
+$kategorije = Classes\Kategorija::getKategorije($db);
 $tabs = '<div id="tabs"><ul>';
 foreach($kategorije as $kat) {
 	$tabs.='<li><a href="switch_admin.php?action=art_list&kat_id='.$kat['kat_id'].'">'.$kat['kat_naziv'].'</a></li>';

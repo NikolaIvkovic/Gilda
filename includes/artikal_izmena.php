@@ -1,9 +1,8 @@
 <?php
 require 'header.php';
-include APP_DIR.'classes/artikli.php';
 if ($mode == 'update') {
 	$action = 'IZMENI';
-	$artikal = new Artikal ($art_id, $db);
+	$artikal = new Classes\Artikal ($art_id, $db);
 	$slika = '';
 	$art_id_hidden = '<input type="hidden" name="art_id" value="'.$art_id.'">';
 }
@@ -57,7 +56,7 @@ else {
 					<td><select name="kat_id" id="kat_id">
 					<?php
 					$kat_id = $values['kat_id'];
-					$options = Kategorija::getKategorije($db);
+					$options = Classes\Kategorija::getKategorije($db);
 					
 					foreach($options as $opt) {
 						if ($opt['kat_id'] == $kat_id) {

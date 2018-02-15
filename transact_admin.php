@@ -1,12 +1,8 @@
 <?php
 require 'header.php';
-include APP_DIR.'classes/image_resize.php';
-include APP_DIR.'classes/artikli.php';
-include APP_DIR.'classes/clanovi.php';
-include APP_DIR.'classes/validator.php';
 switch ($_POST['submit']) {
 	case 'IZMENI ARTIKAL': 
-		$val = new validator();
+		$val = new Classes\Validator();
 		$val->addfield ($_POST['art_naziv'], 'Naziv artikla', 'string');
 		$val->addfield ($_POST['art_prodajna'], 'Prodajna cena', 'num');
 		$val->addfield ($_POST['art_stanje'], 'Stanje na lageru', 'num');
@@ -20,7 +16,7 @@ switch ($_POST['submit']) {
 			$data['art_alkoholno'] = ($_POST['art_alkoholno'] == 'on') ? 1 : 0;
 			$data['art_id'] = $_POST['art_id'];
 			
-			if (artikal::updateArtikal($data, $db) == true) {
+			if (Classes\Artikal::updateArtikal($data, $db) == true) {
 				$_SESSION['errors']['notices'][] = 'Artikal uspešno ažuriran!';
 				header ('Location: index_admin.php');
 			}
@@ -37,14 +33,14 @@ switch ($_POST['submit']) {
 		}
 	break;
 	case 'DODAJ ARTIKAL' :
-		$val = new validator();
+		$val = new Classes\Validator();
 		$val->addfield ($_POST['art_naziv'], 'Naziv artikla', 'string');
 		$val->addfield ($_POST['art_prodajna'], 'Prodajna cena', 'num');
 		$val->addfield ($_POST['art_stanje'], 'Stanje na lageru', 'num');
 		if ($val->validate()) {
 			$imgsrc = '';
 			if (isset($_FILES['art_slika'])) {
-				$slika = new slika ($_FILES['art_slika']);
+				$slika = new Classes\Slika ($_FILES['art_slika']);
 				$slika->saveResized();
 				$imgsrc = $slika->getFilename();
 			}
@@ -55,7 +51,7 @@ switch ($_POST['submit']) {
 			$data['kat_id'] = $_POST['kat_id'];
 			$data['art_alkoholno'] = ($_POST['art_alkoholno'] == 'on') ? 1 : 0;
 			$data['art_slika'] = $imgsrc;
-			if (artikal::newArtikal($data, $db) == true) {
+			if (Classes\Artikal::newArtikal($data, $db) == true) {
 				$_SESSION['errors']['notices'][] = 'Artikal uspešno dodat!';
 				header ('Location: index_admin.php');
 			}
@@ -73,20 +69,20 @@ switch ($_POST['submit']) {
 	break;
 	
 		case 'IZMENI ČLANA': 
-		$val = new validator();
+		$val = new Classes\Validator();
 		$val->addfield ($_POST['cl_imeprezime'], 'Ime i prezime', 'string');
 		$val->addfield ($_POST['cl_rodjen'], 'Datum rođenja', 'req');
-		if ($val->validate() && Clan::dateForm2Db($_POST['cl_rodjen']) != false){
+		if ($val->validate() && Classes\Clan::dateForm2Db($_POST['cl_rodjen']) != false){
 			$data = array();
 			$data['cl_imeprezime'] = $_POST['cl_imeprezime'];
-			$data['cl_rodjen'] = Clan::dateForm2Db($_POST['cl_rodjen']);
+			$data['cl_rodjen'] = Classes\Clan::dateForm2Db($_POST['cl_rodjen']);
 			$data['cl_telefon'] = $_POST['cl_telefon'];
 			$data['cl_email'] = $_POST['cl_email'];
 			$data['cl_facebook'] = $_POST['cl_facebook'];
 			$data['cl_igre'] = $_POST['cl_igre'];
 			$data['cl_broj'] = $_POST['cl_broj'];
 			
-			if (Clan::updateClan($data, $db) == true) {
+			if (Classes\Clan::updateClan($data, $db) == true) {
 				$_SESSION['errors']['notices'][] = 'Član uspešno ažuriran!';
 				header ('Location: index_admin.php');
 			}
@@ -105,19 +101,19 @@ switch ($_POST['submit']) {
 	break;
 	
 	case 'DODAJ ČLANA':
-		$val = new validator();
+		$val = new Classes\Validator();
 		$val->addfield ($_POST['cl_imeprezime'], 'Ime i prezime', 'string');
 		$val->addfield ($_POST['cl_rodjen'], 'Datum rođenja', 'req');
-		if ($val->validate() && Clan::dateForm2Db($_POST['cl_rodjen']) != false){
+		if ($val->validate() && Classes\Clan::dateForm2Db($_POST['cl_rodjen']) != false){
 			$data = array();
 			$data['cl_broj'] = $_POST['cl_broj'];
 			$data['cl_imeprezime'] = $_POST['cl_imeprezime'];
-			$data['cl_rodjen'] = Clan::dateForm2Db($_POST['cl_rodjen']);
+			$data['cl_rodjen'] = Classes\Clan::dateForm2Db($_POST['cl_rodjen']);
 			$data['cl_telefon'] = $_POST['cl_telefon'];
 			$data['cl_email'] = $_POST['cl_email'];
 			$data['cl_facebook'] = $_POST['cl_facebook'];
 			$data['cl_igre'] = $_POST['cl_igre'];
-			if (Clan::newClan($data, $db)) {
+			if (Classes\Clan::newClan($data, $db)) {
 				$_SESSION['errors']['notices'][] = 'Član uspešno dodat!';
 				header ('Location: index_admin.php');
 			}
@@ -138,13 +134,13 @@ switch ($_POST['submit']) {
 	break;
 	case ('AŽURIRAJ STANJE') :
 		foreach ($_POST['fields'] as $data) {
-			artikal::updateStanje($data, $db);
+			Classes\Artikal::updateStanje($data, $db);
 		}
 		echo 'Stanje na lageru uspešno ažurirano!';
 	break;
 	
 	case ('deleteArtikal') :
-		artikal::deleteArtikal ($_POST['art_id'], $db);
+		Classes\Artikal::deleteArtikal ($_POST['art_id'], $db);
 	break;
 	
 }

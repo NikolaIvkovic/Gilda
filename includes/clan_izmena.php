@@ -2,7 +2,7 @@
 require 'header.php';
 if ($mode == 'update') {
 	$action = 'IZMENI';
-	$clan = new Clan($cl_broj, $db);
+	$clan = new Classes\Clan($cl_broj, $db);
 	$broj = '<input type="hidden" id="cl_broj" name="cl_broj" value="'.$cl_broj.'">'.$cl_broj;
 }
 if ($mode == 'add') {

@@ -93,7 +93,7 @@ class Sanklista {
 		$stmt = $db->prepare($sql);
 		$stmt->execute($data);
 		$table = '';
-		$table .= '<div class="obracun">UKUPNO: <span id="obracunCalc">0</span> DIN.</div>';
+		$table .= '<div class="obracun">UKUPNO: <span class="obracunCalc">0</span> DIN.</div>';
 		$table .= '<table id="sanklista" class="liste">';
 		$odd = true;
 		$dani = array( '',

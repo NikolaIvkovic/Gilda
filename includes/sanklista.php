@@ -13,7 +13,15 @@ $tablist.= '</ul>';
 <script>
 $(document).ready (
 	function() {
-		$('.sanklistaWrapper').tabs({active: -1});
+		$('.sanklistaWrapper').tabs({active: -1,
+									beforeActivate: 
+										function(event, ui) {
+											$('.checkObracun:checkbox:checked').each (
+												function() {
+													$(this).prop('checked', false);
+												}
+											);
+										}});
 	}
 );
 </script>

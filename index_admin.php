@@ -151,14 +151,22 @@ $tabs .= '</ul></div>';
 			);
 			$(document).on('click', '.checkObracun',
 				function (event) {
-
-					if ($(this).is(':checked')) {
-						var obracun = parseInt($('#obracunCalc').html().replace('.','')) + parseInt($(this).parent().parent().children('.ukupno').html().replace('.',''));
+					var total = 0;
+					$('.checkObracun:checkbox:checked').each (
+						function () {
+							total += parseInt($(this).parent().parent().children('.ukupno').html().replace('.',''));
+						}
+					);
+					$('.obracunCalc').empty();
+					$('.obracunCalc').text(total.toLocaleString('sr-SR'));
+					console.log(total);
+					/*if ($(this).is(':checked')) {
+						var obracun = parseInt($('.obracunCalc').html().replace('.','')) + parseInt($(this).parent().parent().children('.ukupno').html().replace('.',''));
 					}
 					else {
-						var obracun = parseInt($('#obracunCalc').html().replace('.','')) - parseInt($(this).parent().parent().children('.ukupno').html().replace('.',''));
+						var obracun = parseInt($('.obracunCalc').html().replace('.','')) - parseInt($(this).parent().parent().children('.ukupno').html().replace('.',''));
 					}
-				$('#obracunCalc').html(parseInt(obracun).toLocaleString('sr-SR'));
+				$('.obracunCalc').html(parseInt(obracun).toLocaleString('sr-SR'));*/
 				}
 			);
 			$(document).on('click', '.listRow',

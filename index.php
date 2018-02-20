@@ -92,16 +92,31 @@ $tabs .= '</ul></div>';
 								function(response) {
 								$.each (response, 
 									function (key, item) {
-										
 										var accordionElement = '<h3 id="'+key+'">'+item+'</h3><div></div>';
 										var id = key;
 										$('#accordion').append(accordionElement);
-										$('#accordion').accordion('refresh');
 										$('h3#'+key).droppable ({
 											drop: dropFn
 										});
 									}
 								);
+								$('#accordion').accordion({
+									collapsible: true,
+									active: false,
+									heightStyle: 'content',
+									beforeActivate:
+										function (event, ui) {
+											getAccordionClan(ui.newHeader.attr('id')).done(
+												function (html) {
+													ui.newPanel.html('');
+													ui.newPanel.append(html);
+												}
+											);	
+										}
+								});
+								
+							$('#accordion').accordion('option', 'active', 0);
+							
 							}
 					);
 				//populacija blank sankilste
@@ -155,18 +170,7 @@ $tabs .= '</ul></div>';
 							});
 						}
 				});
-				$('#accordion').accordion({
-					heightStyle: 'content',
-					beforeActivate:
-						function (event, ui) {
-							getAccordionClan(ui.newHeader.attr('id')).done(
-								function (html) {
-									ui.newPanel.html('');
-									ui.newPanel.append(html);
-								}
-							);	
-						}
-				});
+				
 				$('#clanAutocomplete').autocomplete({
 					minLength: 2,
 					source:
@@ -193,8 +197,6 @@ $tabs .= '</ul></div>';
 						}
 					
 				});
-			
-			
 			}
 		);
 		$(document).on('click', '#clanDodaj',

@@ -332,3 +332,20 @@ border: none;
 	text-align: center;
 	padding: 5px;
 }
+.modal {
+	display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 ) 
+                url('../img/loading.gif') 
+                50% 50% 
+                no-repeat;
+}
+body.loading .modal {
+	display: block;
+	overflow: hidden;
+}

@@ -279,6 +279,17 @@ $tabs .= '</ul></div>';
 				});
 			}
 		);
+		//event lsitener za impelemnatciju modalnog ajax loading DIV elementa
+		$(document).on ({
+			ajaxStart: 
+				function () {
+					$('body').addClass('loading');
+				},
+			ajaxStop:
+				function() {
+					$('body').removeClass('loading');
+				}
+		});
 		</script>
 	</head>
 	<body>
@@ -297,5 +308,6 @@ $tabs .= '</ul></div>';
 			</div>
 		</div>
 	<?=include 'footer.php';?>
+	<div class ="modal"></div>
 	</body>
 </html>

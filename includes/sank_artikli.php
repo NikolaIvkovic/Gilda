@@ -5,6 +5,7 @@ $artikli = $kategorija->getArtikli();
 $tiles = '';
 foreach ($artikli as $artikal) {
 	$tiles.= '<div class="artikalTile"
+					data-art_prodajna = "'.$artikal->getProdajna().'" 
 					style="background-image: url(\''.$artikal->getSlika().'\');"
 					data-art_id ="'.$artikal->getArtId().'"><div style="display:inline-block; padding: 30% 0;">'.$artikal->getNaziv().'</div></div>';
 }

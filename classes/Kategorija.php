@@ -8,7 +8,7 @@ class Kategorija {
 	public function __construct($kat_id, \PDO $db) {
 		$this->db = $db;
 		$this->artikli = array();
-		$sql = 'SELECT art_id FROM artikli WHERE kat_id = :kat_id ORDER BY art_alkoholno ASC, art_naziv ASC';
+		$sql = 'SELECT art_id, art_prodajna FROM artikli WHERE kat_id = :kat_id ORDER BY art_alkoholno ASC, art_naziv ASC';
 		$stmt = $this->db->prepare($sql);
 		$stmt->execute(['kat_id' => $kat_id]);
 		while ($row = $stmt->fetch()) {

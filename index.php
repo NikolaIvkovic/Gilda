@@ -154,7 +154,7 @@ $tabs .= '</ul></div>';
 						}
 						
 				});
-				//ucitavanje tablova sa artiklima
+				//ucitavanje tabova sa artiklima
 				$('#tabs').tabs({
 					load: 
 						function (event, ui) {
@@ -170,7 +170,14 @@ $tabs .= '</ul></div>';
 							});
 						}
 				});
-				
+				//tooltip sa cenom za tabove artikala
+				$(document).tooltip({
+					items: 'div[data-art_prodajna]',
+					content:
+						function () {
+							return $(this).data('art_prodajna') + ' DIN';
+						}
+				});
 				$('#clanAutocomplete').autocomplete({
 					minLength: 2,
 					source:

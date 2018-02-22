@@ -205,7 +205,12 @@ $tabs .= '</ul></div>';
 										url: 'switch_admin.php',
 										type: 'POST',
 										data: data
-									});
+									})
+									.done (
+										function(){
+										$('tr#'+rd_id).click();
+										}
+									);
 									$('#'+rd_id).trigger('click');
 									$(this).dialog('close');
 

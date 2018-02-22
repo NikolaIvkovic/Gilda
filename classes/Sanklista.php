@@ -164,7 +164,6 @@ class Sanklista {
 		$sanklista['napomene'] = '<div id="addNapomena" class="formButton" data-rd_id ="'.$data['rd_id'].'">DODAJ NAPOMENU</div>';
 		$sql = 'SELECT np_sadrzaj FROM napomena WHERE rd_id = '.$data['rd_id'];
 		$stmt = $db->query($sql);
-		//var_dump($stmt->fetch());
 		if ($stmt->rowCount()) {
 			while ($row = $stmt->fetch()) {
 				$sanklista['napomene'] .= '<div class="napomene">'.$row['np_sadrzaj'].'</div>';

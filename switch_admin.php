@@ -52,7 +52,7 @@ switch ($_REQUEST['action']) {
 	break;
 	case 'newnapomena':
 		$data = array('rd_id' => $_REQUEST['rd_id'],
-						'np_sadrzaj' => $_REQUEST['np_sadrzaj']);
+						'np_sadrzaj' => nl2br($_REQUEST['np_sadrzaj']));
 		Classes\Sanklista::newNapomena($data, $db);
 	break;
 	case 'duznici':

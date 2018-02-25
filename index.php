@@ -266,6 +266,7 @@ $tabs .= '</ul></div>';
 							}
 					});
 				}
+				$('#accordion').accordion();
 			}
 		);
 		//event listener za klik na '-' dugme 

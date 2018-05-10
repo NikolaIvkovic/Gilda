@@ -1,0 +1,47 @@
+.finalWrapper {
+	background: #333131;
+}
+.finalTitleBar {
+	color: white;
+	font-weight: bold;
+	text-align: center;
+	vertical-align: middle;
+}
+.finalTitleBar .logo {
+	width: 116px;
+}
+
+.finalTitleBar .logo img {
+	width: 100%;
+}
+.finalTitleBar .title {
+	width: 418px;
+
+	font-size: 2vw;
+}
+.finalRankings {
+	text-align: center;
+	margin: auto auto auto;
+	width: 650px;
+	color: #f5f1f1;
+	font-weight: bold;
+}
+.finalRankings .odd {
+	background: gray;
+}
+.finalRankings .even {
+	background: #666;
+}
+.finalRankings td {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+.frHeader td{
+	font-weight: bold;
+	background: #0009;
+	color: #e4e6e9;
+}
+.frFaction {
+	display: block;
+	font-style: oblique;
+}

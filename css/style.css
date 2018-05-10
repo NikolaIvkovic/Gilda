@@ -349,3 +349,6 @@ body.loading .modal {
 	display: block;
 	overflow: hidden;
 }
+.checkObracun {
+	transform: scale(1.5);
+}

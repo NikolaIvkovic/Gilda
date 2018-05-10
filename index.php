@@ -72,6 +72,21 @@ $tabs .= '</ul></div>';
 				//proveravamo da li se nastavlja prethodni radni dan po rd_id cookie-ju
 				if ($.cookie('rd_id') == undefined) {
 					$('.sankWrapper').css('visibility', 'hidden');
+					$('#accordion').accordion({
+									collapsible: true,
+									active: false,
+									heightStyle: 'content',
+									beforeActivate:
+										function (event, ui) {
+											console.log('before activate trigger za NOVU ' + ui.newHeader.attr('id'));
+											getAccordionClan(ui.newHeader.attr('id')).done(
+												function (html) {
+													ui.newPanel.html('');
+													ui.newPanel.append(html);
+												}
+											);	
+										}
+								});
 				}
 				else {
 					$('.sankWrapper').css('visibility', 'visible');
@@ -106,6 +121,7 @@ $tabs .= '</ul></div>';
 									heightStyle: 'content',
 									beforeActivate:
 										function (event, ui) {
+											console.log('before activate trigger za VEC UCITANU ' + ui.newHeader.attr('id'));
 											getAccordionClan(ui.newHeader.attr('id')).done(
 												function (html) {
 													ui.newPanel.html('');

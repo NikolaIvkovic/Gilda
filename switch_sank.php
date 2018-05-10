@@ -43,7 +43,6 @@ switch ($_REQUEST['action']) {
 		echo Classes\Sanklista::newRadniDan($db);
 	break;
 	case 'endradnidan': 
-		//include 'backup.php';
 		$data = array('rd_id' => $_REQUEST['rd_id']);
 		Classes\Sanklista::endRadniDan($data, $db);
 	break;

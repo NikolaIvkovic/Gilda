@@ -1,0 +1,95 @@
+﻿.tmMain {
+	width: 100%;
+	height: 800px;
+	background: #ffffff;
+	margin-left: 10px;
+	opacity: 0.9;
+	padding: 10px;
+	overflow: auto;
+}
+.playerSort {
+	list-style: none;
+	width: 240px;
+	display: inline-block;
+	border: 1px solid gray;
+	padding: 5px 0 0 0;
+	float: left;
+	margin-right: 10px;
+}
+.playerSort li {
+	border: 2px solid black;
+	padding: 10px;
+	margin: 5px;
+	box-shadow: 5px 5px 20px grey;
+	background: white;
+	text-align: center;
+}
+.sortWrapper {
+	width: 500px;
+	margin: auto auto auto;
+	text-align: center;
+	overflow: auto;
+}
+.pairsWrapper {
+	height: auto;
+	overflow: auto;
+	text-align:center;
+}
+.pairsTable {
+	display: inline-block;
+	border: 1px solid black;
+	text-align: center;
+}
+.faction {
+	font-style: italic;
+}
+.tmHeader {
+	width: 1150px;
+	margin: auto auto auto;
+	text-align: center;
+	vertical-align: middle;
+}
+.tmHeader .title {
+	font-size: 3.8vw;
+	font-weight: bold;
+	text-shadow: 2px 2px 2px #050505;
+	color: #e4e4e4;
+}
+.tmTitle {
+	height: 150px;
+  line-height: 150px;
+  text-align: center;
+  display: inline-block;
+}
+.roundFormWrapper {
+	text-align:center;
+}
+.roundForm {
+	display: inline-block;
+}
+.roundForm td {
+	height: 2em;
+}
+.finalRankings {
+	text-align: center;
+	margin: auto auto auto;
+	width: 650px;
+}
+.finalRankings td {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+.frHeader td{
+	font-weight: bold;
+	background: #0009;
+	color: #e4e6e9;
+}
+.frFaction {
+	display: block;
+	font-style: oblique;
+}
+.finalSkins {
+	color: white;
+	font-weight: bold;
+	text-shadow: 1px 1px 2px #000;
+}

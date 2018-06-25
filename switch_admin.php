@@ -39,17 +39,7 @@ switch ($_REQUEST['action']) {
 		$sank = Classes\Sanklista::getSankLista($data, $db);
 		echo $sank['placeno'].$sank['neplaceno'].$sank['napomene'];
 	break;
-	case 'nabavka':
-		$headers = "MIME-Version: 1.0\r\n";
-		$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-		$headers .= "From: gildaigraca@zoho.eu\r\n";
-		$headers .= "Reply-To: gildaigraca@zoho.eu\r\n";
-		$headers .= "Return-Path: gildaigraca@zoho.eu\r\n";
-		$table = Classes\Artikal::nabavka($db);
-		$subject = 'Nabavka za Gildu - '.date('d.m.Y');
-		mail("jelovacn@gmail.com",$subject,$table, $headers);
-		echo $table;
-	break;
+
 	case 'newnapomena':
 		$data = array('rd_id' => $_REQUEST['rd_id'],
 						'np_sadrzaj' => nl2br($_REQUEST['np_sadrzaj']));

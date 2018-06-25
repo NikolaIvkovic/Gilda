@@ -97,20 +97,7 @@ class Artikal {
 		$stmt = $db->prepare($sql);
 		return $stmt->execute(['art_id' => $art_id]);
 	}
-	public static function nabavka (\PDO $db) {
-		$sql = 'SELECT art_naziv, art_stanje FROM `artikli` ORDER BY kat_id ASC, art_alkoholno ASC, art_naziv ASC ';
-		$stmt = $db->query($sql);
-		$odd = true;
-		$table = '<table id ="nabavkaTable"><tr><th>NAZIV</th><th>STANJE</th></tr>';
-		while ($row = $stmt->fetch()) {
-			$style = ($odd) ? '' : ' style="background: #e4e0e0;" ';
-			$table .= '<tr '.$style.'><td>'.$row['art_naziv'].'</td>
-						<td>'.$row['art_stanje'].'</td></tr>';
-			$odd = !$odd;
-		}
-		$table .= '</table>';
-		return $table;
-	}
+
 	
 }
 ?>

@@ -10,7 +10,6 @@ $tabs .= '<li id="clNew"><a href= "switch_admin.php?action=cl_new">Dodaj člana<
 $tabs .= '<li id="clUpdate"><a href= "switch_admin.php?action=cl_list">Spisak članova</a></li>';
 $tabs .= '<li id="liste"><a href= "switch_admin.php?action=liste">Šank liste</a></li>';
 $tabs .= '<li id="duznici"><a href = "switch_admin.php?action=duznici">Dužnici</a></li>';
-$tabs .= '<li class ="nabavka" id="liste"><a href= "switch_admin.php?action=nabavka">NENADE!</a></li>';
 $tabs .= '</ul></div>';
 
 ?>

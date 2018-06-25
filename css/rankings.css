@@ -1,0 +1,50 @@
+#tabs {
+	display: inline-block;
+	width: 350px;
+}
+.gamelist {
+	list-style-type: none;
+}
+.gamelist li {
+	opacity: 0.3;
+	width: 350px;
+	height: 150px;
+}
+.hover {
+	opacity: 0.6 !important;
+}
+.selected {
+	opacity: 1.0 !important;
+}
+.ranklist {
+	border: 1px solid black;
+	border-radius: 25px;
+	display: inline-block;
+	float: right;
+	width: 650px;
+	height: 850px;
+	overflow: auto;
+	background: #fffc;
+	text-align: center;
+	padding: 30px;
+}
+.yearlyRankings {
+	display: inline-block;
+}
+.yearlyRankings td {
+	padding: 10px;
+}
+.yearlyRankings th {
+	background: #626262;
+	color: white;
+	border-radius: 5px;
+}
+.num{
+	text-align:center;
+}
+.rankOdd {
+	background: #f6f6f6;
+}
+.rankEven {
+	background: #d1d1d1;
+}

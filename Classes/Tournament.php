@@ -20,7 +20,7 @@ class Tournament  extends TMBase{
 		$this->name = (isset($data['to_name'])) ? $data['to_name'] : '';
 		$this->toDate = (isset($data['to_date'])) ? $data['to_date'] : date('Y-m-d');
 		$this->game = new Game($data['to_game']);
-		$this->sortingTable = (isset($data['to_sortingTable'])) ? $data['to_sortingTable'] : substr(sha1($this->name.$this->game->getName().$this->toDate), 0, 11);
+		$this->sortingTable = (isset($data['to_sortingTable'])) ? $data['to_sortingTable'] : 'tmp_'.substr(sha1($this->name.$this->game->getName().$this->toDate), 0, 11);
 		foreach ($opt as $key=>$val) {
 			$this->$key = $val;
 		}
@@ -67,8 +67,8 @@ class Tournament  extends TMBase{
 		foreach ($this->game->getColumns() as $column) {
 			$columns[] = $column.' INT(6) DEFAULT 0';
 		}
-		$sql = 'CREATE TABLE `'.$this->sortingTable.'`(
-			pl_id INT(3) UNSIGNED PRIMARY KEY,
+		$sql = 'CREATE TABLE '.$this->sortingTable.'(
+			cl_broj INT(3) UNSIGNED PRIMARY KEY,
 			pl_name VARCHAR(30),
 			pl_faction VARCHAR(30),
 			to_id INT(6) UNSIGNED, '.implode(', ', $columns).'
@@ -112,20 +112,20 @@ class Tournament  extends TMBase{
 		foreach ($rows as $row) {
 			$sql = 'UPDATE '.$this->sortingTable.' SET ';
 			foreach ($row as $col => $val) {
-				if ($col != 'pl_id') {
+				if ($col != 'cl_broj') {
 					$sql .= " $col = $col + $val , ";
 				}
 			}
 			$sql = rtrim($sql, ', ');
-			$sql.= ' WHERE pl_id = '.$row['pl_id'];
+			$sql.= ' WHERE cl_broj = '.$row['cl_broj'];
 			self::dbConn()->query($sql);
 			
 		}
 		//if the game uses a Strength of Schedule column, calculate each players SoS and update rnakings
 		if (in_array('SoS', $this->game->getColumns())) {
 			foreach ($rows as $row) {
-				$SoS = $this->calcSoS($row['pl_id']);
-				$sql = 'UPDATE '.$this->sortingTable.' SET SoS = '.$SoS.' WHERE pl_id = '.$row['pl_id'];
+				$SoS = $this->calcSoS($row['cl_broj']);
+				$sql = 'UPDATE '.$this->sortingTable.' SET SoS = '.$SoS.' WHERE cl_broj = '.$row['cl_broj'];
 				self::dbConn()->query($sql);
 			}
 		}
@@ -137,10 +137,10 @@ class Tournament  extends TMBase{
 		$stmt = self::dbConn()->query($sql);
 		$oponents = [];
 		while($row = $stmt->fetch()) {
-			$oponents[] = ($row['pl1_id'] == $plId) ? 'pl_id = '.$row['pl2_id'] : 'pl_id = '.$row['pl1_id'];
+			$oponents[] = ($row['pl1_id'] == $plId) ? 'cl_broj = '.$row['pl2_id'] : 'cl_broj = '.$row['pl1_id'];
 		}
 		$oponents = implode(' OR ', $oponents);
-		$sql = 'SELECT sum('.$winsCol.') SoS FROM '.$this->sortingTable.' WHERE '.$oponents.' GROUP BY `to_id`';
+		$sql = 'SELECT sum('.$winsCol.') SoS FROM '.$this->sortingTable.' WHERE '.$oponents.' GROUP BY to_id';
 		$stmt = self::dbConn()->query($sql);
 		$row = $stmt->fetch();
 		return $row['SoS'];
@@ -153,8 +153,8 @@ class Tournament  extends TMBase{
 		$left = '<ul class="playerSort" id="pl1">';
 		$right = '<ul class="playerSort" id="pl2">';
 		for ($i = 0; $i<count($pl1); $i++) {
-			$left .= '<li id="'.$pl1[$i]['pl_id'].'">'.$pl1[$i]['pl_name'].'</li>';
-			$right .= '<li id="'.$pl2[$i]['pl_id'].'">'.$pl2[$i]['pl_name'].'</li>';
+			$left .= '<li id="'.$pl1[$i]['cl_broj'].'">'.$pl1[$i]['pl_name'].'</li>';
+			$right .= '<li id="'.$pl2[$i]['cl_broj'].'">'.$pl2[$i]['pl_name'].'</li>';
 		}
 		$left .= '</ul>';
 		$right .= '</ul>';
@@ -290,10 +290,6 @@ class Tournament  extends TMBase{
 	}
 	//delete all relevant cookies and DB data once tournament is finished
 	public function clearTournament() {
-		unset($_COOKIE['to_id']);
-		setcookie ('to_id', '', time() -100);
-		unset ($_COOKIE['currentRound']);
-		setcookie('currentRound', '', time() -100);
 		$sql = 'DROP TABLE '.$this->sortingTable.'; ';
 		$sql .= 'DELETE FROM pairs WHERE to_id = '.$this->id.';';
 		$sql .= 'DELETE FROM tournament WHERE to_id = '.$this->id.';';

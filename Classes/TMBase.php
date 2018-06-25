@@ -7,7 +7,7 @@ abstract class TMBase {
 	static function dbConn() {
 		if (self::$dbhost == null) {
 			$opt = array(\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC);
-			self::$dbhost = new \PDO ('mysql:host=localhost;dbname=tmanagerdb;', 'root', '', $opt);
+			self::$dbhost = new \PDO ('mysql:host=localhost;dbname=tmanagerdb;charset=utf8;', 'root', '', $opt);
 		}
 		return self::$dbhost;
 	}

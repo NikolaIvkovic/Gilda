@@ -51,8 +51,13 @@ switch ($_REQUEST['action']) {
 	break;
 	case 'finishTournament':
 		$tournament = new Classes\Tournament (['to_id' =>$_REQUEST['to_id']]);
+		Classes\Player::updateRankings($tournament);
 		echo $tournament->getFinalRankings();
 		$tournament->clearTournament();
+		unset($_COOKIE['to_id']);
+		setcookie ('to_id', '', time() -100);
+		unset ($_COOKIE['currentRound']);
+		setcookie('currentRound', '', time() -100);
 	break;
 	case 'test':
 		$tournament = new Classes\Tournament(['to_id' => 1]);

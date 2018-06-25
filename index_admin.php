@@ -16,6 +16,7 @@ $tabs .= '</ul></div>';
 ?>
 <html>
 	<head>
+		<meta charset="UTF-8">
 		<title>Gilda Admin Panel</title>
 		<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="css/jQueryUI.css">

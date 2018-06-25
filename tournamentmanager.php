@@ -12,6 +12,7 @@
 		<script src="javascript/jQuery.js"></script>
 		<script src="javascript/jQueryUI.js"></script>
 		<script src="javascript/jquery.cookie.js"></script>
+		<script src="javascript/autocomplete.js"></script>
 		<script>
 		function getRound() {
 			data = {to_id: $.cookie('to_id')};
@@ -64,7 +65,7 @@
 		$(document).on('click', '#addPlayer',
 			function() {
 				var id = $('#players li').length + 1;
-				var html = '<li id="' + id + '">' + id + '. Ime: <input class="pl_name" type="text"> Frakcija: <input class="pl_faction" type="text"></li>';
+				var html = '<li id="' + id + '">' + id + '. Ime: <input class="pl_name autocomplete" type="text"> Frakcija: <input class="pl_faction" type="text"></li>';
 				$('#players').append(html);
 			}
 		);
@@ -122,11 +123,13 @@
 				var players = [];
 				$('#players li').each(
 					function() {
-						var pl_id = $(this).attr('id');
-						var pl_name = $(this).find('.pl_name').val();
+						var inputVal = $(this).find('.pl_name').val();
+						var player = [inputVal.slice(0, inputVal.lastIndexOf('-')), inputVal.slice(inputVal.lastIndexOf('-') + 1)];
+						var cl_broj = player[1];
+						var pl_name = player[0];
 						var pl_faction = $(this).find('.pl_faction').val();
 						players.push({
-							pl_id: pl_id,
+							cl_broj: cl_broj,
 							pl_name: pl_name,
 							pl_faction: pl_faction
 						});
@@ -135,7 +138,7 @@
 				//check for an odd number of players and ad Bye player if necessary
 				if ((players.length / 2) != Math.floor(players.length / 2)) {
 					players.push({
-						pl_id: 999,
+						cl_broj: 999,
 						pl_name: 'BYE',
 						pl_faction: ''
 					});
@@ -176,7 +179,7 @@
 				var i = 0;
 				$('.playerResult').each (
 					function(){
-					rows[i] = {pl_id: $(this).data('plid')};
+					rows[i] = {cl_broj: $(this).data('plid')};
 					$(this).find('.columnField').each(
 						function() {
 							var colName = $(this).data('column');

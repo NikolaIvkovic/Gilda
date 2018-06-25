@@ -12,12 +12,14 @@ $tabs .= '</ul></div>';
 ?>
 <html>
 	<head>
+	<meta charset="UTF-8">
 		<title>Gilda Šank Lista</title>
 		<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="css/jQueryUI.css">
 		<script src="javascript/jQuery.js"></script>
 		<script src="javascript/jQueryUI.js"></script>
 		<script src="javascript/jquery.cookie.js"></script>
+		<script src="javascript/autocomplete.js"></script>
 		<script>
 		var dragItem = {};
 		//funkcija za drop event na accordion
@@ -194,38 +196,14 @@ $tabs .= '</ul></div>';
 							return $(this).data('art_prodajna') + ' DIN';
 						}
 				});
-				$('#clanAutocomplete').autocomplete({
-					minLength: 2,
-					source:
-						function (request, response) {
-							var data = [];
-							$.ajax ({
-								url: 'switch_sank.php',
-								type: 'POST',
-								dataType: 'json',
-								data: {action: 'autocomplete', autocomplete: request.term},
-								success: 
-									function (data) {	
-										
-										response($.map(data,
-											function (n, i) {
-												
-												return{label: n.cl_imeprezime, value: n.cl_imeprezime + '-' + n.cl_broj};
-											}
-										));
-									}
-
-							});
-							response(data);
-						}
-					
-				});
+				
 			}
 		);
 		$(document).on('click', '#clanDodaj',
 			function (event) {
 				event.preventDefault();
-				var clan = $('#clanAutocomplete').val().split('-');
+				var inputVal = $('#clanAutocomplete').val();
+				var clan = [inputVal.slice(0, inputVal.lastIndexOf('-')), inputVal.slice(inputVal.lastIndexOf('-') + 1)];
 				if ($('#'+clan[1]).length) {
 					alert ('Taj clan je vec na listi');
 				}
@@ -326,7 +304,7 @@ $tabs .= '</ul></div>';
 			</div>
 			<div id ="sankBlank" class="sankLista sankBorders"></div>
 			<div id="sankClanovi" class="sankLista sankBorders">
-				<input type="text" id="clanAutocomplete">
+				<input type="text" id="clanAutocomplete" class="autocomplete">
 				<input class="formButton" type="submit" id="clanDodaj" value="DODAJ">
 				<div id="accordion">
 				

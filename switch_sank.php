@@ -30,6 +30,9 @@ switch ($_REQUEST['action']) {
 						'cl_broj' => $cl_broj);
 		echo Classes\Sanklista::getAccordionClan($data, $db);
 	break;
+	case 'removeartikal' :
+		Classes\Sanklista::removeArtikal($_REQUEST['sl_id'], $db);
+	break;
 	case 'rebuildaccordion':
 		$data = array('rd_id' => $_REQUEST['rd_id']);
 		echo json_encode(Classes\Sanklista::rebuildAccordion($data, $db));

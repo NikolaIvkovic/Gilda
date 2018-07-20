@@ -228,5 +228,9 @@ class Sanklista {
 			$duznik.= '</table>';
 		return $duznik;
 	}
+	public static function removeArtikal($sl_id, \PDO $db) {
+		$sql = 'DELETE FROM sanklista WHERE sl_id = '.$sl_id;
+		$db->query($sql);
+	}
 }
 ?>

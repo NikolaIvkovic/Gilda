@@ -283,7 +283,7 @@ $tabs .= '</ul></div>';
 				});
 			}
 		);
-		//event lsitener za impelemnatciju modalnog ajax loading DIV elementa
+		//event listener za impelemnatciju modalnog ajax loading DIV elementa
 		$(document).on ({
 			ajaxStart: 
 				function () {
@@ -294,6 +294,71 @@ $tabs .= '</ul></div>';
 					$('body').removeClass('loading');
 				}
 		});
+		//event listener za dijalog za brisanje pojedinacne stavke
+		$(document).on('contextmenu', '.stavkaButton',
+			function (event) {
+				event.preventDefault();
+				
+					//naziv artikla dobijemo iz prve node roditelja stavkaButton-a sa kojeg skidamo ': ' sa kraja
+					var label = $(this).parent()[0].childNodes[0].data.slice(0, -2);
+					var sl_id = $(this).attr('id');
+					//provera da li se stavka nalazi na blanko listi ili je vezana na clana na accordionu
+					if ($(this).parent().parent().attr('id') == 'sankBlank') {
+						var refresh = function () {
+							getAccordionClan('').done(
+													function (html) {
+														$('#sankBlank').html('');
+														$('#sankBlank').append(html);
+													}
+												);
+						};
+					}
+					else {
+						var accContent = $(this).parent().parent();
+						var cl_broj = $(this).parent().parent().prev().attr('id');
+						var refresh = function() {
+							getAccordionClan(cl_broj).done(
+													function (html) {
+														accContent.html('');
+														accContent.append(html);
+													}
+												);
+						};
+					}
+					$('<div id="stavkaDialog">Izbriši stavku '+label+ '?</div>').dialog({
+						buttons: [
+							{
+								text: 'DA',
+								click: 
+									function () {
+										console.log(sl_id);
+										$.ajax ({
+											type: 'POST',
+											url: 'switch_sank.php',
+											data: {
+												action: 'removeartikal',
+												sl_id: sl_id
+											}
+										})
+										.done(
+											function() {
+												$('#stavkaDialog').dialog('destroy');
+												refresh();
+										});
+									}
+							},
+							{
+								text: 'NE',
+								click: 
+									function() {
+										$('#stavkaDialog').dialog('destroy');
+									}
+							}
+						]
+					});
+				
+			}
+		);
 		</script>
 	</head>
 	<body>
@@ -311,7 +376,7 @@ $tabs .= '</ul></div>';
 				</div>
 			</div>
 		</div>
-	<?=include 'footer.php';?>
+	<?php include 'footer.php' ?>
 	<div class ="modal"></div>
 	</body>
 </html>

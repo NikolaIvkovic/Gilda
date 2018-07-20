@@ -158,15 +158,7 @@ $tabs .= '</ul></div>';
 						}
 					);
 					$('.obracunCalc').empty();
-					$('.obracunCalc').text(total.toLocaleString('sr-SR'));
-					console.log(total);
-					/*if ($(this).is(':checked')) {
-						var obracun = parseInt($('.obracunCalc').html().replace('.','')) + parseInt($(this).parent().parent().children('.ukupno').html().replace('.',''));
-					}
-					else {
-						var obracun = parseInt($('.obracunCalc').html().replace('.','')) - parseInt($(this).parent().parent().children('.ukupno').html().replace('.',''));
-					}
-				$('.obracunCalc').html(parseInt(obracun).toLocaleString('sr-SR'));*/
+					$('.obracunCalc').text(total.toLocaleString('sr-SR'));					
 				}
 			);
 			$(document).on('click', '.listRow',

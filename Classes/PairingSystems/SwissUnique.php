@@ -1,6 +1,6 @@
 <?php
 namespace Classes\PairingSystems;
-class SwissUnique extends \Classes\TMBase implements PairingSystem {
+class SwissUnique extends \Classes\AbstractBase implements PairingSystem {
 	static function getPairs(array $data) : array {
 		$playerList = $data['playerList'];
 		$pairs = $data['pairs'];

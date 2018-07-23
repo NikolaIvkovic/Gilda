@@ -1,6 +1,6 @@
 <?php
 namespace Classes;
-class Tournament  extends TMBase{
+class Tournament  extends AbstractBase{
 	protected $id;
 	protected $name;
 	protected $toDate;
@@ -30,7 +30,7 @@ class Tournament  extends TMBase{
 		else {
 			//create sortingTable
 			$this->createTable();
-			//make entry in tournaments table and get the last inser id as the objects id property
+			//make entry in tournaments table and get the last insert id as the Tournament objects id property
 			$this->id = $this->setTournamentData($data['to_options']);
 			//populate sorting table with entered player data
 			Player::setPlayers($this->sortingTable, $this->id, $data['players']);

@@ -1,6 +1,6 @@
 <?php
 namespace Classes;
-class Game extends TMBAse {
+class Game extends AbstractBase {
 	public static $gmImgPath = 'img/games/';
 	protected $id;
 	protected $name;

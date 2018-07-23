@@ -1,6 +1,6 @@
 <?php
 namespace Classes;
-class Rankings extends TMBase {
+class Rankings extends AbstractBase {
 	
 	public static function getGames() {
 		$games = '<ul class="gamelist">';

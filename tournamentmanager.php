@@ -102,7 +102,7 @@
 
 			}
 		);
-		//submiting new torunament data via AJAX
+		//submitting new tournament data via AJAX
 		$(document).on('click', '#createTournament',
 			function (event) {
 				event.preventDefault();
@@ -135,7 +135,7 @@
 						});
 					}
 				);
-				//check for an odd number of players and ad Bye player if necessary
+				//check for an odd number of players and add Bye player if necessary
 				if ((players.length / 2) != Math.floor(players.length / 2)) {
 					players.push({
 						cl_broj: 999,

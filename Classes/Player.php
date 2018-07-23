@@ -1,6 +1,6 @@
 <?php
 namespace Classes;
-class Player extends TMBase {
+class Player extends AbstractBase {
 	protected $plId;
 	protected $plName;
 	protected $plFaction;

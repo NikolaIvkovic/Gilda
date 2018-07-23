@@ -1,6 +1,6 @@
 <?php
 require '../header.php';
-$kategorija = new Classes\Kategorija ($_GET['kat_id'], $db);
+$kategorija = new Classes\Kategorija ($_GET['kat_id']);
 $artikli = $kategorija->getArtikli();
 $tiles = '';
 foreach ($artikli as $artikal) {

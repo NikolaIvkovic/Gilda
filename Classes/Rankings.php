@@ -16,7 +16,7 @@ class Rankings extends AbstractBase {
 		$data = [];
 		$columns = '';
 		$sql = 'SELECT c.cl_imeprezime, r.rnk_scores, r.rnk_tournamentsWon FROM
-				tmanagerdb.rankings r JOIN gildadb.clanovi c ON
+				rankings r JOIN gildadb.clanovi c ON
 				r.cl_broj = c.cl_broj 
 				WHERE gm_id = '.$gm_id.' AND rnk_year = '.date('Y');
 		$stmt = self::dbConn()->query($sql);

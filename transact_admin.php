@@ -16,7 +16,7 @@ switch ($_POST['submit']) {
 			$data['art_alkoholno'] = ($_POST['art_alkoholno'] == 'on') ? 1 : 0;
 			$data['art_id'] = $_POST['art_id'];
 			
-			if (Classes\Artikal::updateArtikal($data, $db) == true) {
+			if (Classes\Artikal::updateArtikal($data) == true) {
 				$_SESSION['errors']['notices'][] = 'Artikal uspešno ažuriran!';
 				header ('Location: index_admin.php');
 			}
@@ -51,7 +51,7 @@ switch ($_POST['submit']) {
 			$data['kat_id'] = $_POST['kat_id'];
 			$data['art_alkoholno'] = ($_POST['art_alkoholno'] == 'on') ? 1 : 0;
 			$data['art_slika'] = $imgsrc;
-			if (Classes\Artikal::newArtikal($data, $db) == true) {
+			if (Classes\Artikal::newArtikal($data) == true) {
 				$_SESSION['errors']['notices'][] = 'Artikal uspešno dodat!';
 				header ('Location: index_admin.php');
 			}
@@ -82,7 +82,7 @@ switch ($_POST['submit']) {
 			$data['cl_igre'] = $_POST['cl_igre'];
 			$data['cl_broj'] = $_POST['cl_broj'];
 			
-			if (Classes\Clan::updateClan($data, $db) == true) {
+			if (Classes\Clan::updateClan($data) == true) {
 				$_SESSION['errors']['notices'][] = 'Član uspešno ažuriran!';
 				header ('Location: index_admin.php');
 			}
@@ -113,7 +113,7 @@ switch ($_POST['submit']) {
 			$data['cl_email'] = $_POST['cl_email'];
 			$data['cl_facebook'] = $_POST['cl_facebook'];
 			$data['cl_igre'] = $_POST['cl_igre'];
-			if (Classes\Clan::newClan($data, $db)) {
+			if (Classes\Clan::newClan($data)) {
 				$_SESSION['errors']['notices'][] = 'Član uspešno dodat!';
 				header ('Location: index_admin.php');
 			}
@@ -134,13 +134,13 @@ switch ($_POST['submit']) {
 	break;
 	case ('AŽURIRAJ STANJE') :
 		foreach ($_POST['fields'] as $data) {
-			Classes\Artikal::updateStanje($data, $db);
+			Classes\Artikal::updateStanje($data);
 		}
 		echo 'Stanje na lageru uspešno ažurirano!';
 	break;
 	
 	case ('deleteArtikal') :
-		Classes\Artikal::deleteArtikal ($_POST['art_id'], $db);
+		Classes\Artikal::deleteArtikal ($_POST['art_id']);
 	break;
 	
 }

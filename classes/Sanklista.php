@@ -1,26 +1,27 @@
 <?php
 namespace Classes;
-class Sanklista {
-	public static function orderArtikal (array $data, \PDO $db) {
+class Sanklista extends AbstractBase{
+	
+	public static function orderArtikal (array $data) {
 		$sql = 'INSERT INTO sanklista (art_id, rd_id, cl_broj) VALUES (:art_id, :rd_id, :cl_broj)';
-		$stmt = $db->prepare($sql);
+		$stmt = self::dbConn()->prepare($sql);
 		$stmt->execute($data);
 		$sql = 'UPDATE artikli SET art_stanje = art_stanje -1 WHERE art_id = '.$data['art_id'];
-		$db->query($sql);
+		self::dbConn()->query($sql);
 		return true;
 	}
-	public static function payArtikal (array $data, \PDO $db) {
+	public static function payArtikal (array $data) {
 		$sql = 'UPDATE sanklista set sl_placeno = 1 WHERE sl_id = :sl_id';
-		$stmt = $db->prepare($sql);
+		$stmt = self::dbConn()->prepare($sql);
 		$stmt->execute($data);
 		return true;
 	}
-	public static function getAccordionClan (array $data, \PDO $db) {
+	public static function getAccordionClan (array $data) {
 		$sql = 'SELECT sl.sl_id, sl.art_id, sl.sl_placeno, art.art_naziv 
 				FROM sanklista sl  JOIN artikli art
 				ON sl.art_id = art.art_id
 				WHERE sl.cl_broj = :cl_broj AND sl.rd_id = :rd_id';
-		$stmt = $db->prepare($sql);
+		$stmt = self::dbConn()->prepare($sql);
 		$stmt->execute($data);
 		$clan = array();
 		$imaneplaceno = false;
@@ -52,20 +53,20 @@ class Sanklista {
 					FROM `sanklista` sl JOIN artikli art ON sl.art_id = art.art_id 
 					WHERE sl.rd_id = :rd_id AND sl.cl_broj = :cl_broj AND sl_placeno = 0
 					GROUP BY sl.cl_broj';
-			$stmt = $db->prepare($sql);
+			$stmt = self::dbConn()->prepare($sql);
 			$stmt->execute($data);
 			$row = $stmt->fetch();
 			$html .= '<div class="zaPlacanje">ZA PLAĆANJE: '.$row['ukupno'].' DIN</div>';
 		}
 	return $html;
 	}
-	public static function rebuildAccordion(array $data, \PDO $db)  {
+	public static function rebuildAccordion(array $data)  {
 		$accordion = array();
 		$sql = 'SELECT sl.cl_broj, cl.cl_imeprezime 
 				FROM sanklista sl JOIN clanovi cl 
 				ON sl.cl_broj = cl.cl_broj
 				WHERE rd_id = :rd_id';
-		$stmt = $db->prepare($sql);
+		$stmt = self::dbConn()->prepare($sql);
 		$stmt->execute ($data);
 		while ($row = $stmt->fetch()) {
 			$accordion[$row['cl_broj']] = $row['cl_imeprezime'];
@@ -76,7 +77,7 @@ class Sanklista {
 		}
 		return $accordion;
 	}
-	public static function getListTable (array $data, \PDO $db) {
+	public static function getListTable (array $data) {
 		$month = new \DateTime($data['month']);
 		$data = array();
 		$data['start'] = $month->format('Y-m-d H:i:s');
@@ -90,7 +91,7 @@ class Sanklista {
 				WHERE sl.sl_placeno = 1 AND sl.rd_start >= :start AND sl.rd_start <= :end
 				GROUP BY sl.rd_id
 				ORDER BY sl.rd_id DESC';
-		$stmt = $db->prepare($sql);
+		$stmt = self::dbConn()->prepare($sql);
 		$stmt->execute($data);
 		$table = '';
 		$table .= '<div class="obracun">UKUPNO: <span class="obracunCalc">0</span> DIN.</div>';
@@ -121,13 +122,13 @@ class Sanklista {
 		$table .= '</table>';
 		return $table;
 	}
-	public static function getSankLista(array $data, \PDO $db) {
+	public static function getSankLista(array $data) {
 		$sql = 'SELECT art.art_naziv, art.art_prodajna, COUNT(sl.sl_placeno) AS prodato, art.art_stanje
 				FROM sanklista sl JOIN artikli art ON sl.art_id = art.art_id  
 				WHERE sl.rd_id = :rd_id AND sl_placeno = 1
 				GROUP BY sl.art_id 
 				ORDER BY art.kat_id DESC, art.art_alkoholno DESC, art.art_naziv ASC';
-		$stmt = $db->prepare($sql);
+		$stmt = self::dbConn()->prepare($sql);
 		$stmt->execute($data);
 		$odd = true;
 		$sanklista['placeno'] = '<div class="naslov">ŠANK LISTA</div>
@@ -150,7 +151,7 @@ class Sanklista {
 				ON s.cl_broj = c.cl_broj) sl JOIN artikli art ON
 				sl.art_id = art.art_id
 				WHERE sl.sl_placeno = 0 AND sl.rd_id = :rd_id';
-		$stmt = $db->prepare($sql);
+		$stmt = self::dbConn()->prepare($sql);
 		$stmt->execute($data);
 		$sanklista['neplaceno'] = '<table class="neplaceno"><tr><th colspan="3">NEPLAĆENO</th></tr>
 									<tr><th>Naziv</th><th>Cena</th><th>Clan</th></tr>';
@@ -163,7 +164,7 @@ class Sanklista {
 		$sanklista['neplaceno'] .= '</table>';
 		$sanklista['napomene'] = '<div id="addNapomena" class="formButton" data-rd_id ="'.$data['rd_id'].'">DODAJ NAPOMENU</div>';
 		$sql = 'SELECT np_sadrzaj FROM napomena WHERE rd_id = '.$data['rd_id'];
-		$stmt = $db->query($sql);
+		$stmt = self::dbConn()->query($sql);
 		if ($stmt->rowCount()) {
 			while ($row = $stmt->fetch()) {
 				$sanklista['napomene'] .= '<div class="napomene">'.$row['np_sadrzaj'].'</div>';
@@ -171,23 +172,23 @@ class Sanklista {
 		}
 		return $sanklista;
 	}
-	public static function newRadniDan(\PDO $db) {
+	public static function newRadniDan() {
 		$sql = 'INSERT INTO radni_dani (rd_stop) values (null)';
-		$db->query($sql);
-		return $db->lastinsertid();
+		self::dbConn()->query($sql);
+		return self::dbConn()->lastinsertid();
 	}
-	public static function endRadniDan(array $data, \PDO $db) {
+	public static function endRadniDan(array $data) {
 		$sql = 'UPDATE radni_dani SET rd_stop = CURRENT_TIMESTAMP WHERE rd_id = :rd_id';
-		$stmt = $db->prepare($sql);
+		$stmt = self::dbConn()->prepare($sql);
 		$stmt->execute($data);
 		echo $data['rd_id'];
 	}
-	public static function newNapomena (array $data, \PDO $db) {
+	public static function newNapomena (array $data) {
 		$sql = 'INSERT INTO napomena (rd_id, np_sadrzaj) VALUES (:rd_id, :np_sadrzaj)';
-		$stmt = $db->prepare($sql);
+		$stmt = self::dbConn()->prepare($sql);
 		$stmt->execute($data);
 	}
-	public static function getDuznici (array $data = NULL, \PDO $db) {
+	public static function getDuznici (array $data = NULL) {
 		$rd_condition = '';
 		if (isset($data)) {
 			$rd_condition = ' AND NOT s.rd_id = '.$data['rd_id'];
@@ -197,7 +198,7 @@ class Sanklista {
 				JOIN clanovi c ON s.cl_broj = c.cl_broj
 				WHERE NOT s.cl_broj = 0 AND NOT s.cl_broj = 270 AND NOT s.sl_placeno = 1 '.$rd_condition.' 
 				GROUP BY s.cl_broj';
-		$stmt = $db->query($sql);
+		$stmt = self::dbConn()->query($sql);
 		if ($stmt->rowCount()) {
 			$odd = true;
 			$duznici = '<table class="clanlista" style="width: 400px;"><tr><th>Ime i Prezime</th><th>Dug</th></tr>';
@@ -210,12 +211,12 @@ class Sanklista {
 			return $duznici;
 		}
 	}
-	public static function getDuznikArtikli(array $data, \PDO $db) {
+	public static function getDuznikArtikli(array $data) {
 		$sql = 'SELECT a.art_naziv, a.art_prodajna, r.rd_start FROM
 				artikli a JOIN sanklista s ON a.art_id = s.art_id
 				JOIN radni_dani r ON s.rd_id = r.rd_id
 				WHERE s.cl_broj = :cl_broj AND s.sl_placeno = 0';
-		$stmt = $db->prepare($sql);
+		$stmt = self::dbConn()->prepare($sql);
 		$stmt->execute($data);
 		$duznik = '<table class="clanlista" style="width:520px;"><tr><th>Artikal</th><th>Cena</th><th>Kupljeno</th></tr>';
 		$odd = true;
@@ -228,9 +229,9 @@ class Sanklista {
 			$duznik.= '</table>';
 		return $duznik;
 	}
-	public static function removeArtikal($sl_id, \PDO $db) {
+	public static function removeArtikal($sl_id) {
 		$sql = 'DELETE FROM sanklista WHERE sl_id = '.$sl_id;
-		$db->query($sql);
+		self::dbConn()->query($sql);
 	}
 }
 ?>

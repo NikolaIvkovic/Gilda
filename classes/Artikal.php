@@ -1,7 +1,6 @@
 <?php
 namespace Classes;
-class Artikal {
-	private $db;
+class Artikal extends AbstractBase{
 	private $art_id;
 	private $art_naziv;
 	private $art_prodajna;
@@ -10,11 +9,11 @@ class Artikal {
 	private $kat_id;
 	private $art_slika;
 	
-	public function __construct($art_id, \PDO $db){
-		$this->db = $db;
+	
+	public function __construct($art_id){
 		$this->art_id = $art_id;
 		$sql = 'SELECT * FROM artikli WHERE art_id = :art_id AND art_ponuda = 1';
-		$stmt = $this->db->prepare ($sql);
+		$stmt = self::dbConn()->prepare ($sql);
 		$stmt->execute(['art_id' => $art_id]);
 		$row = $stmt->fetch();
 		$this->art_naziv = $row['art_naziv'];
@@ -47,28 +46,28 @@ class Artikal {
 		return $this->art_slika;
 	}
 
-	public static function getNazivFromId($art_id, \PDO $db){
+	public static function getNazivFromId($art_id){
 		$sql = 'SELECT art_naziv FROM artikli WHERE art_id = :art_id';
-		$stmt = $this->db->prepare($sql);
+		$stmt = self::dbConn()->prepare($sql);
 		$stmt->execute(['art_id' => $art_id]);
 		$row = $stmt->fetch();
 		return $row['art_naziv'];
 	}
-	public static function getCena($art_id, \PDO $db){
+	public static function getCena($art_id){
 		$sql = 'SELECT art_prodajna FROM artikli WHERE art_id = :art_id';
-		$stmt = $this->db->prepare($sql);
+		$stmt = self::dbConn()->prepare($sql);
 		$stmt->execute(['art_id' => $art_id]);
 		$row = $stmt->fetch();
 		return $row['art_prodajna'];
 	}
-	public static function getPonuda ($art_id, \PDO $db) {
+	public static function getPonuda ($art_id) {
 		$sql = 'SELECT art_ponuda FROM artikli WHERE art_id = :art_id';
-		$stmt = $db->prepare($sql);
+		$stmt = self::dbConn()->prepare($sql);
 		$stmt->execute(['art_id' => $art_id]);
 		$row = $stmt->fetch();
 		return $row['art_ponuda'];
 	}
-	public static function updateArtikal (array $data, \PDO $db) {
+	public static function updateArtikal (array $data) {
 		
 		$sql = 'UPDATE artikli SET
 				art_naziv = :art_naziv,
@@ -77,24 +76,24 @@ class Artikal {
 				kat_id = :kat_id,
 				art_alkoholno = :art_alkoholno
 				WHERE art_id = :art_id';
-		$stmt = $db->prepare($sql);
+		$stmt = self::dbConn()->prepare($sql);
 		return $stmt->execute($data);
 		
 	}
-	public static function newArtikal (array $data, \PDO $db) {
+	public static function newArtikal (array $data) {
 		$sql = 'INSERT INTO artikli (art_naziv, art_prodajna, art_stanje, kat_id, art_alkoholno, art_slika)
 							VALUES (:art_naziv, :art_prodajna, :art_stanje, :kat_id, :art_alkoholno, :art_slika)';
-		$stmt = $db->prepare($sql);
+		$stmt = self::dbConn()->prepare($sql);
 		return $stmt->execute($data);
 	}
-	public static function updateStanje(array $data, \PDO $db){
+	public static function updateStanje(array $data){
 		$sql = 'UPDATE artikli SET art_stanje = :art_stanje WHERE art_id = :art_id';
-		$stmt = $db->prepare($sql);
+		$stmt = self::dbConn()->prepare($sql);
 		return $stmt->execute($data);
 	}
-	public static function deleteArtikal ($art_id, \PDO $db) {
+	public static function deleteArtikal ($art_id) {
 		$sql = 'UPDATE artikli SET art_ponuda = 0 WHERE art_id = :art_id';
-		$stmt = $db->prepare($sql);
+		$stmt = self::dbConn()->prepare($sql);
 		return $stmt->execute(['art_id' => $art_id]);
 	}
 

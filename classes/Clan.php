@@ -1,6 +1,6 @@
 <?php
 namespace Classes;
-class Clan {
+class Clan extends AbstractBase{
 	private $db;
 	private $cl_broj;
 	private $cl_imeprezime;
@@ -10,9 +10,10 @@ class Clan {
 	private $cl_facebook;
 	private $cl_igre;
 	
-	public function __construct ($cl_broj, \PDO $db) {
+	
+	public function __construct ($cl_broj) {
 		$sql = 'SELECT * FROM clanovi WHERE cl_broj = :cl_broj';
-		$stmt = $db->prepare($sql);
+		$stmt = self::dbConn()->prepare($sql);
 		$stmt->execute(['cl_broj' => $cl_broj]);
 		$row = $stmt->fetch();
 		$this->cl_broj = $cl_broj;
@@ -43,7 +44,7 @@ class Clan {
 	}
 	public static function nextBroj (\PDO $db) {
 		$sql = 'SELECT cl_broj FROM clanovi ORDER BY cl_broj DESC LIMIT 1';
-		$stmt = $db->query($sql);
+		$stmt = self::dbConn()->query($sql);
 		$row = $stmt->fetch();
 		return $row['cl_broj'] + 1;
 	}
@@ -67,7 +68,7 @@ class Clan {
 		return date ('d.m.Y', mktime(0, 0, 0, $tempdate[1], $tempdate[2], $tempdate[0]));
 	}
 	
-	public static function updateClan (array $data, \PDO $db) {
+	public static function updateClan (array $data) {
 		
 		$sql = 'UPDATE clanovi SET
 				cl_imeprezime = :cl_imeprezime,
@@ -77,7 +78,7 @@ class Clan {
 				cl_facebook = :cl_facebook,
 				cl_igre = :cl_igre
 				WHERE cl_broj = :cl_broj';
-		try{$stmt = $db->prepare($sql);
+		try{$stmt = self::dbConn()->prepare($sql);
 		}
 		catch (Exception $e) {
 			$_SESSION['errors']['system'][] = $e;
@@ -86,12 +87,12 @@ class Clan {
 		return $stmt->execute($data);
 		
 	}
-	public static function newClan (array $data, \PDO $db) {
+	public static function newClan (array $data) {
 		$sql = 'INSERT INTO clanovi (cl_broj, cl_imeprezime, cl_rodjen, cl_telefon, cl_email, cl_facebook, cl_igre)
 							VALUES (:cl_broj, :cl_imeprezime, :cl_rodjen, :cl_telefon, :cl_email, :cl_facebook, :cl_igre)';
 		
 		try {
-			$stmt = $db->prepare($sql);
+			$stmt = self::dbConn()->prepare($sql);
 		}
 		catch (Exception $e) {
 			$_SESSION['errors']['system'][] = $e;

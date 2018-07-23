@@ -2,7 +2,7 @@
 require 'header.php';
 if ($mode == 'update') {
 	$action = 'IZMENI';
-	$artikal = new Classes\Artikal ($art_id, $db);
+	$artikal = new Classes\Artikal ($art_id);
 	$slika = '';
 	$art_id_hidden = '<input type="hidden" name="art_id" value="'.$art_id.'">';
 }

@@ -20,34 +20,34 @@ switch ($_REQUEST['action']) {
 						'cl_broj' => (isset($_REQUEST['cl_broj'])&& $_REQUEST['cl_broj'] != '') ? $_REQUEST['cl_broj'] : 0);
 		
 		
-		Classes\Sanklista::orderArtikal ($data, $db);
+		Classes\Sanklista::orderArtikal ($data);
 	break;
 	case 'payartikal':
 		$data = array('sl_id' => $_REQUEST['sl_id']);
-		Classes\Sanklista::payArtikal($data, $db);
+		Classes\Sanklista::payArtikal($data);
 		$cl_broj = (isset($_REQUEST['cl_broj']) && $_REQUEST['cl_broj'] != '') ? $_REQUEST['cl_broj'] : 0;
 		$data = array('rd_id' => $_REQUEST['rd_id'],
 						'cl_broj' => $cl_broj);
-		echo Classes\Sanklista::getAccordionClan($data, $db);
+		echo Classes\Sanklista::getAccordionClan($data);
 	break;
 	case 'removeartikal' :
-		Classes\Sanklista::removeArtikal($_REQUEST['sl_id'], $db);
+		Classes\Sanklista::removeArtikal($_REQUEST['sl_id']);
 	break;
 	case 'rebuildaccordion':
 		$data = array('rd_id' => $_REQUEST['rd_id']);
-		echo json_encode(Classes\Sanklista::rebuildAccordion($data, $db));
+		echo json_encode(Classes\Sanklista::rebuildAccordion($data));
 	break;
 	case 'getaccordionclan' :
 		$data = array ('cl_broj' => ($_REQUEST['cl_broj'] == 'NaN') ? 0 : $_REQUEST['cl_broj'], 
 						'rd_id' => $_REQUEST['rd_id']);
-		echo Classes\Sanklista::getAccordionClan($data, $db);
+		echo Classes\Sanklista::getAccordionClan($data);
 	break;
 	case 'newradnidan':
 		echo Classes\Sanklista::newRadniDan($db);
 	break;
 	case 'endradnidan': 
 		$data = array('rd_id' => $_REQUEST['rd_id']);
-		Classes\Sanklista::endRadniDan($data, $db);
+		Classes\Sanklista::endRadniDan($data);
 	break;
 
 }

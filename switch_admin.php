@@ -32,31 +32,31 @@ switch ($_REQUEST['action']) {
 	break;
 	case 'listeMesec': 
 		$data = array('month' => $_REQUEST['month']);
-		echo Classes\Sanklista::getListTable($data, $db);
+		echo Classes\Sanklista::getListTable($data);
 	break;
 	case 'dnevnalista':
 		$data = array('rd_id' => $_REQUEST['rd_id']);
-		$sank = Classes\Sanklista::getSankLista($data, $db);
+		$sank = Classes\Sanklista::getSankLista($data);
 		echo $sank['placeno'].$sank['neplaceno'].$sank['napomene'];
 	break;
 
 	case 'newnapomena':
 		$data = array('rd_id' => $_REQUEST['rd_id'],
 						'np_sadrzaj' => nl2br($_REQUEST['np_sadrzaj']));
-		Classes\Sanklista::newNapomena($data, $db);
+		Classes\Sanklista::newNapomena($data);
 	break;
 	case 'duznici':
 		if (isset($_COOKIE['rd_id'])){
 			$data = array('rd_id' => $_COOKIE['rd_id']);
-			echo Classes\Sanklista::getDuznici($data, $db);
+			echo Classes\Sanklista::getDuznici($data);
 		}
 		else {
-			echo Classes\Sanklista::getDuznici(null, $db);
+			echo Classes\Sanklista::getDuznici();
 		}
 	break;
 	case 'getDuznikArtikli' :
 		$data = array('cl_broj' => $_REQUEST['cl_broj']);
-		echo Classes\Sanklista::getDuznikArtikli($data, $db);
+		echo Classes\Sanklista::getDuznikArtikli($data);
 	break;
 }
 ?>

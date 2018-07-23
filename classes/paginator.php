@@ -1,20 +1,20 @@
 <?php
 	namespace Classes;
-	class Paginator {
+	class Paginator extends AbstractBase{
 	public $numrows;
 	public $pagesize;
 	public $rangelen;
 	public $range;
 	public $pageqstr;
 	public $errors;
-	public $db;
 	public $currentpage;
 	private $numpages;
 	public $prevstr;
 	public $nextstr;
 	public $cleanquerystr;
 	
-		public function __construct(\PDO $db) {
+	
+		public function __construct() {
 		//podesiti pocetne vrednosti
 		$this->pagesize = 10;
 		$this->rangelen = 7;
@@ -25,7 +25,6 @@
 		$this->currentpage = 0;
 		$this->prevstr = '&lt;&lt;&lt;';
 		$this->nextstr = '&gt;&gt;&gt;';
-		$this->db = $db;
 		}
 		public function setPageSize($pagesize) {
 			if ($pagesize == '' || !is_int($pagesize)) {
@@ -58,7 +57,7 @@
 		public function getNumRows ($table) {
 			
 			$sql = 'SELECT count(*) as numrows FROM '.$table;
-			$stmt = $this->db->prepare($sql);
+			$stmt = self::dbConn()->prepare($sql);
 			$stmt->execute();
 			$row = $stmt->fetch();
 			$this->numrows = $row['numrows'];

@@ -1,7 +1,7 @@
 <?php
 namespace Classes;
 class Kategorija extends AbstractBase{
-	private $artikli;
+	protected $artikli;
 	
 	
 	public function __construct($kat_id) {
@@ -15,9 +15,7 @@ class Kategorija extends AbstractBase{
 			}
 		}
 	}
-	public function getArtikli () {
-		return $this->artikli;
-	}
+
 	public static function getKatName ($kat_id) {
 		$sql = 'SELECT kat_naziv FROM artikli_kategorije WHERE kat_id = :kat_id';
 		$stmt = self::dbConn()->prepare($sql);

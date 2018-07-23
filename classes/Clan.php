@@ -1,14 +1,13 @@
 <?php
 namespace Classes;
 class Clan extends AbstractBase{
-	private $db;
-	private $cl_broj;
-	private $cl_imeprezime;
-	private $cl_rodjen;
-	private $cl_telefon;
-	private $cl_email;
-	private $cl_facebook;
-	private $cl_igre;
+	protected $broj;
+	protected $imeprezime;
+	protected $rodjen;
+	protected $telefon;
+	protected $email;
+	protected $facebook;
+	protected $igre;
 	
 	
 	public function __construct ($cl_broj) {
@@ -16,13 +15,13 @@ class Clan extends AbstractBase{
 		$stmt = self::dbConn()->prepare($sql);
 		$stmt->execute(['cl_broj' => $cl_broj]);
 		$row = $stmt->fetch();
-		$this->cl_broj = $cl_broj;
-		$this->cl_imeprezime = $row['cl_imeprezime'];
-		$this->cl_rodjen = $row['cl_rodjen'];
-		$this->cl_telefon = $row['cl_telefon'];
-		$this->cl_email = $row['cl_email'];
-		$this->cl_facebook = $row['cl_facebook'];
-		$this->cl_igre = $row['cl_igre'];	
+		$this->broj = $cl_broj;
+		$this->imeprezime = $row['cl_imeprezime'];
+		$this->rodjen = $row['cl_rodjen'];
+		$this->telefon = $row['cl_telefon'];
+		$this->email = $row['cl_email'];
+		$this->facebook = $row['cl_facebook'];
+		$this->igre = $row['cl_igre'];	
 	}
 	public function getImePrezime () {
 		return $this->cl_imeprezime;
@@ -42,7 +41,7 @@ class Clan extends AbstractBase{
 	public function getIgre () {
 		return $this->cl_igre;
 	}
-	public static function nextBroj (\PDO $db) {
+	public static function nextBroj () {
 		$sql = 'SELECT cl_broj FROM clanovi ORDER BY cl_broj DESC LIMIT 1';
 		$stmt = self::dbConn()->query($sql);
 		$row = $stmt->fetch();

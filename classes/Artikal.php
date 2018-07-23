@@ -1,50 +1,30 @@
 <?php
 namespace Classes;
 class Artikal extends AbstractBase{
-	private $art_id;
-	private $art_naziv;
-	private $art_prodajna;
-	private $art_stanje;
-	private $art_alkoholno;
-	private $kat_id;
-	private $art_slika;
+	protected $artId;
+	protected $naziv;
+	protected $prodajna;
+	protected $stanje;
+	protected $alkoholno;
+	protected $katId;
+	protected $slika;
 	
 	
 	public function __construct($art_id){
-		$this->art_id = $art_id;
+		$this->artId = $art_id;
 		$sql = 'SELECT * FROM artikli WHERE art_id = :art_id AND art_ponuda = 1';
 		$stmt = self::dbConn()->prepare ($sql);
 		$stmt->execute(['art_id' => $art_id]);
 		$row = $stmt->fetch();
-		$this->art_naziv = $row['art_naziv'];
-		$this->art_prodajna = $row['art_prodajna'];
-		$this->art_stanje = $row['art_stanje'];
-		$this->kat_id = $row['kat_id'];
-		$this->art_alkoholno = $row['art_alkoholno'];
-		$this->art_slika = $row['art_slika'];
+		$this->naziv = $row['art_naziv'];
+		$this->prodajna = $row['art_prodajna'];
+		$this->stanje = $row['art_stanje'];
+		$this->katId = $row['kat_id'];
+		$this->alkoholno = $row['art_alkoholno'];
+		$this->slika = $row['art_slika'];
 	
 	}
-	public function getArtId() {
-		return $this->art_id;
-	}
-	public function getNaziv() {
-		return $this->art_naziv;
-	}
-	public function getProdajna() {
-		return $this->art_prodajna;
-	}
-	public function getStanje() {
-		return $this->art_stanje;
-	}
-	public function getKatId() {
-		return $this->kat_id;
-	}
-	public function getAlkoholno() {
-		return $this->art_alkoholno;
-	}
-	public function getSlika() {
-		return $this->art_slika;
-	}
+	
 
 	public static function getNazivFromId($art_id){
 		$sql = 'SELECT art_naziv FROM artikli WHERE art_id = :art_id';

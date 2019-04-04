@@ -65,7 +65,7 @@
 		$(document).on('click', '#addPlayer',
 			function() {
 				var id = $('#players li').length + 1;
-				var html = '<li id="' + id + '">' + id + '. Ime: <input class="pl_name autocomplete" type="text"> Frakcija: <input class="pl_faction" type="text"></li>';
+				var html = '<li id="' + id + '">' + id + '. Ime: <input class="pl_name autocomplete" type="text" required> Frakcija: <input class="pl_faction" type="text" required></li>';
 				$('#players').append(html);
 			}
 		);

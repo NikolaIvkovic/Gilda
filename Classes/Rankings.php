@@ -20,41 +20,46 @@ class Rankings extends AbstractBase {
 				r.cl_broj = c.cl_broj 
 				WHERE gm_id = '.$gm_id.' AND rnk_year = '.date('Y');
 		$stmt = self::dbConn()->query($sql);
-		while ($row = $stmt->fetch()) {
-			$player = ['cl_imeprezime' => $row['cl_imeprezime'],
-						'rnk_tournamentsWon' => $row['rnk_tournamentsWon']];
-			$scores = unserialize($row['rnk_scores']);
-			$columns = ($columns == '') ? array_keys($scores) : $columns;
-			foreach ($scores as $key=>$val) {
-				$player[$key] = $val;
+		if ($stmt->rowCount() > 0){
+			while ($row = $stmt->fetch()) {
+				$player = ['cl_imeprezime' => $row['cl_imeprezime'],
+							'rnk_tournamentsWon' => $row['rnk_tournamentsWon']];
+				$scores = unserialize($row['rnk_scores']);
+				$columns = ($columns == '') ? array_keys($scores) : $columns;
+				foreach ($scores as $key=>$val) {
+					$player[$key] = $val;
+				}
+				$data[] = $player;	
 			}
-			$data[] = $player;	
-		}
-		$columnsTH = '';
-		foreach ($columns as $col) {
-			$columnsTH.= "<th>$col</th>";
-		}
-		$multisortStr = 'array_multisort(array_column($data, "rnk_tournamentsWon"), SORT_DESC, ';
-		foreach($columns as $col) {
-			$multisortStr .= 'array_column($data, "'.$col.'"), SORT_DESC, ';
-		}
-		$multisortStr.= '$data);';
-		eval($multisortStr);
-		$table = '<table class="yearlyRankings">
-					<tr><th>Ime i Prezime</th><th>Osvojeni<br>Turniri</th>'.$columnsTH.'</tr>';
-		$odd = true;
-		foreach ($data as $row) {
-			$scoreTD = '';
+			$columnsTH = '';
+			foreach ($columns as $col) {
+				$columnsTH.= "<th>$col</th>";
+			}
+			$multisortStr = 'array_multisort(array_column($data, "rnk_tournamentsWon"), SORT_DESC, ';
 			foreach($columns as $col) {
-				$scoreTD .= '<td class="num">'.$row[$col].'</td>';
+				$multisortStr .= 'array_column($data, "'.$col.'"), SORT_DESC, ';
 			}
-			$rowClass = ($odd) ? 'rankOdd' : 'rankEven';
-			$table .= '<tr class="'.$rowClass.'">
-						<td>'.$row['cl_imeprezime'].'</td>
-						<td class="num">'.$row['rnk_tournamentsWon'].'</td>'.$scoreTD.'</tr>';
-			$odd = !$odd;
+			$multisortStr.= '$data);';
+			eval($multisortStr);
+			$table = '<table class="yearlyRankings">
+						<tr><th>Ime i Prezime</th><th>Osvojeni<br>Turniri</th>'.$columnsTH.'</tr>';
+			$odd = true;
+			foreach ($data as $row) {
+				$scoreTD = '';
+				foreach($columns as $col) {
+					$scoreTD .= '<td class="num">'.$row[$col].'</td>';
+				}
+				$rowClass = ($odd) ? 'rankOdd' : 'rankEven';
+				$table .= '<tr class="'.$rowClass.'">
+							<td>'.$row['cl_imeprezime'].'</td>
+							<td class="num">'.$row['rnk_tournamentsWon'].'</td>'.$scoreTD.'</tr>';
+				$odd = !$odd;
+			}
+			$table .= '</table>';
 		}
-		$table .= '</table>';
+		else {
+			$table = "<h2>U ovoj sezoni nema odigranih turnira za izabranu igru...</h2>";
+		}
 		return $table;
 	}
 }

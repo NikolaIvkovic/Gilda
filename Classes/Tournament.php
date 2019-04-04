@@ -47,7 +47,6 @@ class Tournament  extends AbstractBase{
 		$data = $stmt->fetch();
 		$data['to_options'] = unserialize($data['to_options']);
 		return $data;
-		
 	}
 	private function setTournamentData($options) {
 		$options = serialize($options);
